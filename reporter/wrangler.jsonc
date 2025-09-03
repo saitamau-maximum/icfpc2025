@@ -1,0 +1,12 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "icfpc2025-reporter",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-09-03",
+	"observability": {
+		"enabled": true
+	},
+	"triggers": {
+		"crons": ["* * * * *"]
+	}
+}
