@@ -46,7 +46,10 @@ fn get_input_or_stdin(arg: Option<String>, field_name: &str) -> Result<String> {
             io::stdin().read_to_string(&mut buffer)?;
             let trimmed = buffer.trim();
             if trimmed.is_empty() {
-                return Err(anyhow::anyhow!("{} cannot be empty. Provide via argument or stdin.", field_name));
+                return Err(anyhow::anyhow!(
+                    "{} cannot be empty. Provide via argument or stdin.",
+                    field_name
+                ));
             }
             Ok(trimmed.to_string())
         }
@@ -56,12 +59,15 @@ fn get_input_or_stdin(arg: Option<String>, field_name: &str) -> Result<String> {
 #[tokio::main]
 async fn main() -> Result<()> {
     dotenvy::dotenv().ok();
-    
+
     let cli = Cli::parse();
-    
-    let team_id = env::var("ICFPC_TEAM_ID")
-        .map_err(|_| anyhow::anyhow!("Team ID is required. Set via ICFPC_TEAM_ID environment variable or .env file"))?;
-    
+
+    let team_id = env::var("ICFPC_TEAM_ID").map_err(|_| {
+        anyhow::anyhow!(
+            "Team ID is required. Set via ICFPC_TEAM_ID environment variable or .env file"
+        )
+    })?;
+
     let client = AedificiumClient::new(team_id);
 
     match cli.command {
@@ -72,16 +78,14 @@ async fn main() -> Result<()> {
         }
         Commands::Explore { plans } => {
             let plans_input = get_input_or_stdin(plans, "Plans")?;
-            let plans_vec: Vec<String> = plans_input
-                .split(',')
-                .map(|s| s.trim().to_string())
-                .filter(|s| !s.is_empty())
-                .collect();
-            
+
+            let plans_vec: Vec<String> = serde_json::from_str(&plans_input)
+                .map_err(|e| anyhow::anyhow!("Invalid JSON format for plans: {}", e))?;
+
             if plans_vec.is_empty() {
                 return Err(anyhow::anyhow!("No valid plans found after parsing"));
             }
-            
+
             let response = client.explore(plans_vec).await?;
             println!("{}", serde_json::to_string_pretty(&response)?);
         }

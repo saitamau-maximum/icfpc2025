@@ -26,10 +26,10 @@ cargo build --release
 ./target/release/aedificium select < problem.txt
 
 # Explore multiple plans
-./target/release/aedificium explore "1,2,3"
+./target/release/aedificium explore '["0325", "1234"]'
 
 # Explore multiple plans from stdin
-./target/release/aedificium explore < plans.txt
+./target/release/aedificium explore < plans.json
 
 # Submit a map guess
 ./target/release/aedificium guess '{"rooms":[1,2],"startingRoom":1,"connections":[]}'
