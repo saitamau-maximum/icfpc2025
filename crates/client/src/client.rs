@@ -13,13 +13,17 @@ pub struct AedificiumClient {
     debug: bool,
 }
 
+fn parse_bool(value: String) -> bool {
+    value.to_lowercase() == "true"
+}
+
 impl AedificiumClient {
     pub fn new(id: String) -> Self {
         Self {
             client: Client::new(),
             base_url: "https://31pwr5t6ij.execute-api.eu-west-2.amazonaws.com".to_string(),
             id,
-            debug: env::var("AEDIFICIUM_CLIENT_DEBUG").is_ok(),
+            debug: parse_bool(env::var("AEDIFICIUM_CLIENT_DEBUG").unwrap_or("false".to_string())),
         }
     }
 
