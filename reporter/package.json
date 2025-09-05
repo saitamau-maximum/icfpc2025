@@ -9,7 +9,6 @@
 		"cf-typegen": "wrangler types"
 	},
 	"devDependencies": {
-		"node-html-parser": "^7.0.1",
 		"typescript": "^5.5.2",
 		"wrangler": "^4.33.2"
 	}

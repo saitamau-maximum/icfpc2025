@@ -44,7 +44,7 @@ pub struct MapConnection {
     pub to: RoomDoor,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct RoomDoor {
     pub room: usize,
     pub door: usize,
