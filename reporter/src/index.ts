@@ -66,7 +66,7 @@ export default {
 		}
 		let resp = await fetch(RANKING_PAGE_URL);
 		const root = parse(await resp.text());
-		const table = root.querySelector('table');
+		const table = root.querySelector('table#leaderboardTable');
 		if (!table) {
 			console.error('Table not found');
 			return;
