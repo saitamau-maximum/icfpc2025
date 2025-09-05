@@ -37,3 +37,12 @@ cargo build --release
 # Submit a map guess from stdin
 ./target/release/aedificium guess < map.json
 ```
+
+### Run Solver (eg. Greedy)
+
+```bash
+cargo run --bin greedy # debug mode run
+
+cargo build --release # release mode run
+./target/release/greedy
+```
