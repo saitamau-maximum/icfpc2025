@@ -1,6 +1,7 @@
 use std::{collections::HashSet, env};
 
-use icfpc2025_client::{AedificiumClient, Map, MapConnection, RoomDoor};
+use icfpc2025_client::AedificiumRemoteClient;
+use icfpc2025_common::{AedificiumClient, Map, MapConnection, RoomDoor};
 use rand::Rng;
 
 const N: usize = 3;
@@ -17,7 +18,7 @@ async fn main() -> Result<(), anyhow::Error> {
         )
     })?;
 
-    let client = AedificiumClient::new(team_id);
+    let client = AedificiumRemoteClient::new(team_id);
 
     let mut rng = rand::rng();
 

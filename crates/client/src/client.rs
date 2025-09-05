@@ -1,12 +1,15 @@
 use anyhow::Result;
+use async_trait::async_trait;
+use icfpc2025_common::{
+    AedificiumClient, ExploreRequest, ExploreResponse, GuessRequest, GuessResponse, Map,
+    SelectRequest, SelectResponse,
+};
 use reqwest::Client;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use std::env;
 
-use crate::types::*;
-
-pub struct AedificiumClient {
+pub struct AedificiumRemoteClient {
     id: String,
     client: Client,
     base_url: String,
@@ -17,7 +20,7 @@ fn parse_bool(value: String) -> bool {
     value.to_lowercase() == "true"
 }
 
-impl AedificiumClient {
+impl AedificiumRemoteClient {
     pub fn new(id: String) -> Self {
         Self {
             client: Client::new(),
@@ -53,8 +56,10 @@ impl AedificiumClient {
         let result = response.json::<R>().await?;
         Ok(result)
     }
-
-    pub async fn select(&self, problem_name: String) -> Result<SelectResponse> {
+}
+#[async_trait]
+impl AedificiumClient for AedificiumRemoteClient {
+    async fn select(&self, problem_name: String) -> Result<SelectResponse> {
         let data = SelectRequest {
             id: self.id.clone(),
             problem_name,
@@ -62,7 +67,7 @@ impl AedificiumClient {
         self.request("/select", &data).await
     }
 
-    pub async fn explore(&self, plans: Vec<String>) -> Result<ExploreResponse> {
+    async fn explore(&self, plans: Vec<String>) -> Result<ExploreResponse> {
         let data = ExploreRequest {
             id: self.id.clone(),
             plans,
@@ -70,7 +75,7 @@ impl AedificiumClient {
         self.request("/explore", &data).await
     }
 
-    pub async fn guess(&self, data: Map) -> Result<GuessResponse> {
+    async fn guess(&self, data: Map) -> Result<GuessResponse> {
         let data = GuessRequest {
             id: self.id.clone(),
             map: data,

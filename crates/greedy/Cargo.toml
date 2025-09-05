@@ -1,14 +1,15 @@
 [package]
-name = "greedy"
+name = "icfpc2025-greedy"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-icfpc2025-client = { path = "../client" }
 tokio = { workspace = true }
 dotenvy = { workspace = true }
 anyhow = { workspace = true }
 rand = "0.9.2"
+icfpc2025-common = { workspace = true }
+icfpc2025-client = { workspace = true }
 
 [[bin]]
 name = "greedy"

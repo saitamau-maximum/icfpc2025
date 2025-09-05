@@ -9,3 +9,7 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 reqwest = { version = "0.11", features = ["json"] }
 tokio = { version = "1.0", features = ["full"] }
+async-trait = "0.1"
+
+icfpc2025-common = { path = "crates/common" }
+icfpc2025-client = { path = "crates/client" }

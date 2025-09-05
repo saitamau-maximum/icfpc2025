@@ -1,9 +1,10 @@
 use anyhow::Result;
-use icfpc2025_client::{AedificiumClient, Map, MapConnection, RoomDoor};
+use icfpc2025_client::AedificiumRemoteClient;
+use icfpc2025_common::{AedificiumClient, Map, MapConnection, RoomDoor};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let client = AedificiumClient::new("example-id".to_string());
+    let client = AedificiumRemoteClient::new("example-id".to_string());
 
     // Select a problem
     let _select_response = client.select("example-problem".to_string()).await?;
