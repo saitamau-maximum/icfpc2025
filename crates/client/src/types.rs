@@ -19,7 +19,7 @@ pub struct SelectRequest {
     pub problem_name: String,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SelectResponse {
     #[serde(flatten)]
     pub data: serde_json::Value,
@@ -31,7 +31,7 @@ pub struct ExploreRequest {
     pub plans: Vec<String>,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ExploreResponse {
     pub results: Vec<Vec<i32>>,
     #[serde(rename = "queryCount")]
@@ -50,7 +50,7 @@ pub struct RoomDoor {
     pub door: i32,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Map {
     pub rooms: Vec<i32>,
     #[serde(rename = "startingRoom")]
@@ -64,7 +64,7 @@ pub struct GuessRequest {
     pub map: Map,
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GuessResponse {
     pub correct: bool,
 }
