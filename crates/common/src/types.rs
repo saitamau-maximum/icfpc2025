@@ -38,7 +38,7 @@ pub struct ExploreResponse {
     pub query_count: usize,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct MapConnection {
     pub from: RoomDoor,
     pub to: RoomDoor,

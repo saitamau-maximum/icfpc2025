@@ -13,3 +13,4 @@ async-trait = "0.1"
 
 icfpc2025-common = { path = "crates/common" }
 icfpc2025-client = { path = "crates/client" }
+icfpc2025-simulator = { path = "crates/simulator" }

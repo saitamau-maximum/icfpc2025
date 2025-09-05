@@ -67,7 +67,7 @@ impl AedificiumClient for AedificiumRemoteClient {
         self.request("/select", &data).await
     }
 
-    async fn explore(&self, plans: Vec<String>) -> Result<ExploreResponse> {
+    async fn explore(&mut self, plans: Vec<String>) -> Result<ExploreResponse> {
         let data = ExploreRequest {
             id: self.id.clone(),
             plans,

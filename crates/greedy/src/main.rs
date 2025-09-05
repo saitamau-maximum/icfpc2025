@@ -18,7 +18,7 @@ async fn main() -> Result<(), anyhow::Error> {
         )
     })?;
 
-    let client = AedificiumRemoteClient::new(team_id);
+    let mut client = AedificiumRemoteClient::new(team_id);
 
     let mut rng = rand::rng();
 

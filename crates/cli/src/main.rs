@@ -69,7 +69,7 @@ async fn main() -> Result<()> {
         )
     })?;
 
-    let client = AedificiumRemoteClient::new(team_id);
+    let mut client = AedificiumRemoteClient::new(team_id);
 
     match cli.command {
         Commands::Select { problem } => {
