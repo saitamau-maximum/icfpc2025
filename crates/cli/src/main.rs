@@ -1,6 +1,7 @@
 use anyhow::Result;
 use clap::{Parser, Subcommand};
-use icfpc2025_client::{AedificiumClient, Map};
+use icfpc2025_client::AedificiumRemoteClient;
+use icfpc2025_common::{AedificiumClient, Map};
 use std::env;
 use std::io::{self, Read};
 
@@ -68,7 +69,7 @@ async fn main() -> Result<()> {
         )
     })?;
 
-    let client = AedificiumClient::new(team_id);
+    let client = AedificiumRemoteClient::new(team_id);
 
     match cli.command {
         Commands::Select { problem } => {

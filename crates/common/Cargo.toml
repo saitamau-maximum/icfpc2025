@@ -1,8 +1,8 @@
 [package]
-name = "icfpc2025-client"
+name = "icfpc2025-common"
 version = "0.1.0"
 edition = "2021"
-description = "Rust API client for ICFPC 2025 Aedificium contest"
+description = "Rust common library for ICFPC 2025 Aedificium contest"
 license = "MIT"
 
 [dependencies]
@@ -12,4 +12,3 @@ reqwest = { workspace = true }
 tokio = { workspace = true }
 anyhow = { workspace = true }
 async-trait = { workspace = true }
-icfpc2025-common = { workspace = true }
