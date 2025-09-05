@@ -2,6 +2,7 @@ use anyhow::Result;
 use reqwest::Client;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
+use std::env;
 
 use crate::types::*;
 
@@ -9,6 +10,7 @@ pub struct AedificiumClient {
     id: String,
     client: Client,
     base_url: String,
+    debug: bool,
 }
 
 impl AedificiumClient {
@@ -17,6 +19,7 @@ impl AedificiumClient {
             client: Client::new(),
             base_url: "https://31pwr5t6ij.execute-api.eu-west-2.amazonaws.com".to_string(),
             id,
+            debug: env::var("AEDIFICIUM_CLIENT_DEBUG").is_ok(),
         }
     }
 
@@ -26,6 +29,13 @@ impl AedificiumClient {
         R: DeserializeOwned,
     {
         let url = format!("{}{}", self.base_url, endpoint);
+
+        if self.debug {
+            println!("=== [DEBUG] AedificiumClient Request ===");
+            println!("{}", serde_json::to_string_pretty(data)?);
+            println!("========================================");
+        }
+
         let response = self.client.post(&url).json(data).send().await?;
 
         if !response.status().is_success() {
