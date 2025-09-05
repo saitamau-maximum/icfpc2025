@@ -15,51 +15,31 @@ icfpc2025-client = { path = "crates/client" }
 
 ```rust
 use anyhow::Result;
-use icfpc2025_client::{AedificiumClient, RegisterRequest, SelectRequest, ExploreRequest, GuessRequest, Map, MapConnection, RoomDoor};
+use icfpc2025_client::{AedificiumClient, Map, MapConnection, RoomDoor};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let client = AedificiumClient::new();
-
-    // Register for the contest
-    let register_response = client
-        .register(RegisterRequest {
-            name: "Team Name".to_string(),
-            pl: "Rust".to_string(),
-            email: "team@example.com".to_string(),
-        })
-        .await?;
-
-    let id = register_response.id;
+    let client = AedificiumClient::new("example-id".to_string());
 
     // Select a problem
     client
-        .select(SelectRequest {
-            id: id.clone(),
-            problem_name: "example-problem".to_string(),
-        })
+        .select("example-problem".to_string())
         .await?;
 
     // Explore routes with batch plans
     let explore_response = client
-        .explore(ExploreRequest {
-            id: id.clone(),
-            plans: vec!["N".to_string(), "S".to_string(), "E".to_string()],
-        })
+        .explore(vec!["N".to_string(), "S".to_string(), "E".to_string()])
         .await?;
 
     // Submit a map guess
     let guess_response = client
-        .guess(GuessRequest {
-            id,
-            map: Map {
-                rooms: vec![1, 2, 3],
-                starting_room: 1,
-                connections: vec![MapConnection {
-                    from: RoomDoor { room: 1, door: 0 },
-                    to: RoomDoor { room: 2, door: 1 },
-                }],
-            },
+        .guess(Map {
+            rooms: vec![1, 2, 3],
+            starting_room: 1,
+            connections: vec![MapConnection {
+                from: RoomDoor { room: 1, door: 0 },
+                to: RoomDoor { room: 2, door: 1 },
+            }],
         })
         .await?;
 
@@ -70,7 +50,6 @@ async fn main() -> Result<()> {
 
 ## API Endpoints
 
-- `POST /register` - Register for the contest
 - `POST /select` - Select a problem
 - `POST /explore` - Explore routes with batch plans
 - `POST /guess` - Submit a map guess
