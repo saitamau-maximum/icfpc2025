@@ -44,7 +44,7 @@ cargo run --bin aedificium -- explore <plans>
 Plans should be comma-separated strings:
 
 ```bash
-cargo run --bin aedificium -- explore "plan1,plan2,plan3"
+cargo run --bin aedificium -- explore '["0325", "1234"]'
 ```
 
 ### Submit a Guess
