@@ -19,7 +19,7 @@ const responseToMarkdown = (results: APIResponse) => {
 	const RANK_MAX_LENGTH = 5;
 	const TEAM_NAME_MAX_LENGTH = 60;
 	const SCORE_MAX_LENGTH = 5;
-	markdown += '```markdown\n';
+	markdown += '```\n';
 	markdown += `| ${'Rank'.padEnd(RANK_MAX_LENGTH)} | ${'Team Name'.padEnd(TEAM_NAME_MAX_LENGTH)} | ${'Score'.padEnd(SCORE_MAX_LENGTH)} |\n`;
 	markdown += '| ' + '-'.repeat(RANK_MAX_LENGTH) + ' | ' + '-'.repeat(TEAM_NAME_MAX_LENGTH) + ' | ' + '-'.repeat(SCORE_MAX_LENGTH) + ' |\n';
 	let idx = 0;
@@ -29,9 +29,7 @@ const responseToMarkdown = (results: APIResponse) => {
 			prevScore = result.score;
 		}
 		if (result.teamName === 'Maximum' || idx < 10) {
-			let teamName = result.teamName;
-			teamName = teamName.replace('_', '_');
-			markdown += `| ${rank.toString().padEnd(RANK_MAX_LENGTH)} | ${teamName.padEnd(TEAM_NAME_MAX_LENGTH)} | ${result.score
+			markdown += `| ${rank.toString().padEnd(RANK_MAX_LENGTH)} | ${result.teamName.padEnd(TEAM_NAME_MAX_LENGTH)} | ${result.score
 				.toString()
 				.padEnd(SCORE_MAX_LENGTH)} |\n`;
 		}
