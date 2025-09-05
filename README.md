@@ -2,6 +2,14 @@
 
 ## CLI
 
+### Setup
+
+```bash
+cp .env.example .env
+```
+
+Fill in the `ICFPC_TEAM_ID` in the `.env` file.
+
 ### Build
 
 ```bash
