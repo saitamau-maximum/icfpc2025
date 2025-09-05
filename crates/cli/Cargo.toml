@@ -14,5 +14,5 @@ clap = { version = "4.0", features = ["derive"] }
 tokio = { workspace = true }
 anyhow = { workspace = true }
 serde_json = { workspace = true }
-dotenvy = "0.15"
+dotenvy = { workspace = true }
 icfpc2025-client = { path = "../client" }

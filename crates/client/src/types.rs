@@ -33,9 +33,9 @@ pub struct ExploreRequest {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ExploreResponse {
-    pub results: Vec<Vec<i32>>,
+    pub results: Vec<Vec<usize>>,
     #[serde(rename = "queryCount")]
-    pub query_count: i32,
+    pub query_count: usize,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -46,15 +46,15 @@ pub struct MapConnection {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RoomDoor {
-    pub room: i32,
-    pub door: i32,
+    pub room: usize,
+    pub door: usize,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Map {
-    pub rooms: Vec<i32>,
+    pub rooms: Vec<usize>,
     #[serde(rename = "startingRoom")]
-    pub starting_room: i32,
+    pub starting_room: usize,
     pub connections: Vec<MapConnection>,
 }
 
