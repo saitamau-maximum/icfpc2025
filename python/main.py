@@ -4,6 +4,13 @@ from ortools.sat.python import cp_model
 import json
 import subprocess
 import os
+import argparse
+
+try:
+    # 外部SATソルバー連携
+    from sat_external import solve_from_trace_with_sat
+except Exception:
+    solve_from_trace_with_sat = None  # type: ignore
 
 
 def de_bruijn(k: int, alphabet: List[int]) -> List[int]:
@@ -166,7 +173,6 @@ def solve_from_trace(n: int, plan: str, outputs: List[int]) -> Dict[str, Any]:
         raise RuntimeError("No feasible model found")
 
     # --- 解の取り出し ---
-    S = [solver.Value(S_int[i]) for i in range(L + 1)]
     labels = [solver.Value(Label[r]) for r in range(n)]
     T_mat = [[solver.Value(T[r][d]) for d in range(6)] for r in range(n)]
 
@@ -244,9 +250,17 @@ def build_connections_from_T(T: List[List[int]]) -> List[Dict[str, Dict[str, int
 # 使い方の例（擬似）
 # ----------------------------
 if __name__ == "__main__":
-    # n は /select した問題の部屋数（問題ページで公開）
-    n = 6
-    problem_name = "primus"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--n", type=int, default=6)
+    parser.add_argument("--problem", type=str, default="primus")
+    parser.add_argument("--use-external-sat", action="store_true")
+    parser.add_argument(
+        "--solver", type=str, default=None, help="glucose/minisatのパス"
+    )
+    args = parser.parse_args()
+
+    n = args.n
+    problem_name = args.problem
     plan = make_plan(n)
     print(plan)
 
@@ -276,7 +290,12 @@ if __name__ == "__main__":
     outputs = json.loads(resp.stdout)["results"][0]
     print(outputs)
 
-    map_spec = solve_from_trace(n, plan, outputs)
+    if args.use_external_sat:
+        if solve_from_trace_with_sat is None:
+            raise RuntimeError("sat_external が読み込めませんでした")
+        map_spec = solve_from_trace_with_sat(n, plan, outputs, solver_path=args.solver)
+    else:
+        map_spec = solve_from_trace(n, plan, outputs)
     print(map_spec)
 
     resp = subprocess.run(
