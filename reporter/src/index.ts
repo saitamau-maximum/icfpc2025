@@ -25,7 +25,7 @@ const responseToMarkdown = (results: APIResponse) => {
 	let idx = 0;
 	for (const result of results) {
 		if (result.score !== prevScore) {
-			rank++;
+			rank = idx + 1;
 			prevScore = result.score;
 		}
 		if (result.teamName === 'Maximum' || idx < 10) {
