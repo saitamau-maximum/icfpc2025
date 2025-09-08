@@ -1,5 +1,13 @@
 # ICFPC 2025
 
+The [ICFPC 2025](https://icfpcontest2025.github.io/) solution for team "Maximum".
+
+Team members:
+
+- [@sorachi](https://github.com/sorachi)
+- [@thirofoo](https://github.com/thirofoo)
+- [@a01sa01to](https://github.com/a01sa01to)
+
 ## CLI
 
 ### Setup
